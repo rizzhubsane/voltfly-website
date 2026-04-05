@@ -102,11 +102,11 @@ export default function PrivacyPolicy() {
                 <div className="space-y-4">
                   <p className="text-brand-gray text-base flex items-center gap-3">
                     <strong className="text-brand-cyan w-24">Email:</strong> 
-                    <a href="mailto:privacy@voltfly.in" className="hover:text-white transition-colors">privacy@voltfly.in</a>
+                    <a href="mailto:gsanghi@voltflyev.com" className="hover:text-white transition-colors">gsanghi@voltflyev.com</a>
                   </p>
                   <p className="text-brand-gray text-base flex items-center gap-3">
                     <strong className="text-brand-cyan w-24">WhatsApp:</strong> 
-                    <a href="https://wa.me/919999999999" className="hover:text-white transition-colors">+91 99999 99999</a>
+                    <a href="https://wa.me/919899089969" className="hover:text-white transition-colors">+91 98990 89969</a>
                   </p>
                 </div>
               </div>
