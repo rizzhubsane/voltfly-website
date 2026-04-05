@@ -1,26 +1,296 @@
 @import "tailwindcss";
 
+/* ─── Brand Design Tokens ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cyan:       #00D4FF;
+  --blue:       #4AB4EA;
+  --green:      #55CC5A;
+  --lime:       #AADD00;
+  --lime-dark:  #7DC200;
+  --gray:       #C2C2C2;
+
+  --bg-page:    #060606;
+  --bg-surface: #111111;
+  --bg-card:    #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  /* Make these available as Tailwind utilities: text-cyan, bg-cyan, etc. */
+  --color-cyan:       #00D4FF;
+  --color-blue:       #4AB4EA;
+  --color-green:      #55CC5A;
+  --color-lime:       #AADD00;
+  --color-lime-dark:  #7DC200;
+  --color-silver:     #C2C2C2;
+  --color-page:       #060606;
+  --color-surface:    #111111;
+  --color-card:       #171717;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─── */
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
+
+/* ─── Background Grid Texture ─── */
+.bg-texture {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Navbar Glass ─── */
+.glass-nav {
+  background: rgba(6, 6, 6, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ─── Glass Card ─── */
+.glass-card {
+  background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s;
+}
+.glass-card:hover {
+  border-color: rgba(255,255,255,0.14);
+  transform: translateY(-4px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 40px rgba(0,212,255,0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* ─── Logo Wordmark Gradients ─── */
+.text-volt {
+  background: linear-gradient(135deg, #4AB4EA 0%, #55CC5A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-fly {
+  background: linear-gradient(135deg, #AADD00 0%, #7DC200 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Badge / Tag variants ─── */
+.badge-cyan {
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  color: #00D4FF;
+}
+.badge-lime {
+  background: rgba(170, 221, 0, 0.12);
+  border: 1px solid rgba(170, 221, 0, 0.25);
+  color: #AADD00;
+}
+.badge-green {
+  background: rgba(85, 204, 90, 0.12);
+  border: 1px solid rgba(85, 204, 90, 0.25);
+  color: #55CC5A;
+}
+
+/* ─── Icon Containers ─── */
+.icon-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.icon-box-cyan:hover,
+.glass-card:hover .icon-box-cyan {
+  background: rgba(0, 212, 255, 0.12);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.2);
+}
+.icon-box-lime:hover,
+.glass-card:hover .icon-box-lime {
+  background: rgba(170, 221, 0, 0.12);
+  border-color: rgba(170, 221, 0, 0.3);
+  box-shadow: 0 0 24px rgba(170, 221, 0, 0.2);
+}
+.icon-box-green:hover,
+.glass-card:hover .icon-box-green {
+  background: rgba(85, 204, 90, 0.12);
+  border-color: rgba(85, 204, 90, 0.3);
+  box-shadow: 0 0 24px rgba(85, 204, 90, 0.2);
+}
+
+/* ─── CTA Button ─── */
+.btn-primary {
+  background: #00D4FF;
+  color: #000000;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.btn-primary:hover {
+  background: #ffffff;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-outline {
+  background: rgba(255,255,255,0.04);
+  color: #ffffff;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 9999px;
+  transition: all 0.3s;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.09);
+}
+
+/* ─── Ambient Glow Orbs ─── */
+.glow-cyan {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-lime {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(170, 221, 0, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-blue {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 180, 234, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Pricing Card Highlight ─── */
+.card-featured {
+  background: linear-gradient(160deg, rgba(0,212,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(0,212,255,0.1),
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 60px rgba(0,212,255,0.1);
+}
+.card-featured:hover {
+  border-color: rgba(0,212,255,0.5);
+  box-shadow:
+    0 0 0 1px rgba(0,212,255,0.2),
+    0 32px 80px rgba(0,0,0,0.6),
+    0 0 80px rgba(0,212,255,0.15);
+}
+
+/* ─── Phone Mockup ─── */
+.phone-frame {
+  background: #0a0a0a;
+  border: 10px solid #1c1c1c;
+  border-radius: 48px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 0 60px rgba(0,212,255,0.12);
+  overflow: hidden;
+}
+.phone-screen {
+  background: var(--bg-page);
+  position: relative;
+  overflow: hidden;
+}
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: #1c1c1c;
+  border-radius: 0 0 20px 20px;
+  z-index: 10;
+}
+
+/* ─── App Screen Card ─── */
+.app-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  transition: border-color 0.3s;
+}
+.app-card:hover {
+  border-color: rgba(0,212,255,0.25);
+}
+.app-card-dark {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+}
+
+/* ─── Scroll Reveal ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 120ms; }
+.reveal-delay-2 { transition-delay: 240ms; }
+.reveal-delay-3 { transition-delay: 360ms; }
+.reveal-delay-4 { transition-delay: 480ms; }
+
+/* ─── Section dividers ─── */
+.section-divider {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ─── Hub card ─── */
+.hub-hours {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 8px 16px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ─── Footer ─── */
+.footer-link {
+  color: #C2C2C2;
+  font-size: 15px;
+  transition: color 0.2s;
+}
+.footer-link:hover {
+  color: #ffffff;
+}
+
+/* ─── Scrollbar ─── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
