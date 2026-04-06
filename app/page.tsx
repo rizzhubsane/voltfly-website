@@ -122,8 +122,8 @@ export default function Home() {
               </div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] mb-6 text-white">
-                Delhi's Electric<br />
-                <span className="text-volt">Delivery</span> <span className="text-fly">Fleet</span>
+                Electric Vehicle<br />
+                <span className="text-volt">Fleet</span> <span className="text-fly">Operator</span>
               </h1>
 
               <p className="text-lg sm:text-xl mb-10 max-w-lg leading-relaxed" style={{ color: "#C2C2C2" }}>
@@ -144,7 +144,7 @@ export default function Home() {
                 {[
                   { val: "100+", label: "Active Riders" },
                   { val: "2", label: "Delhi Hubs" },
-                  { val: "₹250", label: "Per Day" },
+                  { val: "₹230", label: "Per Day" },
                   { val: "Zero", label: "Fuel Cost" },
                 ].map(({ val, label }) => (
                   <div key={label}>
@@ -560,7 +560,7 @@ export default function Home() {
                 WhatsApp Support
               </a>
               <a
-                href="mailto:gsanghi@voltflyev.com"
+                href="mailto:Info@voltflyev.com"
                 className="inline-flex items-center gap-3 footer-link group"
               >
                 <span
@@ -569,7 +569,7 @@ export default function Home() {
                 >
                   <Zap size={15} />
                 </span>
-                gsanghi@voltflyev.com
+                Info@voltflyev.com
               </a>
             </div>
           </div>

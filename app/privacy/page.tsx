@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
                 <div className="space-y-4">
                   <p className="text-brand-gray text-base flex items-center gap-3">
                     <strong className="text-brand-cyan w-24">Email:</strong> 
-                    <a href="mailto:gsanghi@voltflyev.com" className="hover:text-white transition-colors">gsanghi@voltflyev.com</a>
+                    <a href="mailto:Info@voltflyev.com" className="hover:text-white transition-colors">Info@voltflyev.com</a>
                   </p>
                   <p className="text-brand-gray text-base flex items-center gap-3">
                     <strong className="text-brand-cyan w-24">WhatsApp:</strong> 
