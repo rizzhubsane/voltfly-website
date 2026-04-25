@@ -376,7 +376,7 @@ export default function Home() {
             <div className="reveal reveal-delay-1 glass-card rounded-3xl p-10 flex flex-col">
               <div className="text-xl font-bold text-white mb-4">Daily</div>
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-5xl font-black text-white">₹250</span>
+                <span className="text-5xl font-black text-white">₹230</span>
                 <span className="font-medium" style={{ color: "#C2C2C2" }}>/day</span>
               </div>
               <p className="mb-8 text-base" style={{ color: "rgba(255,255,255,0.72)" }}>
