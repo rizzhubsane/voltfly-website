@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -29,6 +29,27 @@ function useReveal() {
   }, []);
 }
 
+/** Direct APK for riders until Play Store is live. Host the file at this path (see `public/`) or set NEXT_PUBLIC_RIDER_APK_URL to a full HTTPS URL (e.g. Supabase Storage). */
+const RIDER_APK_HREF =
+  (typeof process !== "undefined" && process.env.NEXT_PUBLIC_RIDER_APK_URL?.trim()) || "/voltfly-rider.apk";
+
+function WaveDivider({ flip = false }: { flip?: boolean }) {
+  return (
+    <div className={`relative -mb-px ${flip ? "rotate-180" : ""}`} aria-hidden>
+      <svg
+        viewBox="0 0 1440 120"
+        className="block w-full h-[52px] sm:h-[72px] md:h-[96px]"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,96L60,90.7C120,85,240,75,360,58.7C480,43,600,21,720,21.3C840,21,960,43,1080,58.7C1200,75,1320,85,1380,90.7L1440,96L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"
+          fill="#f8faf8"
+        />
+      </svg>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -41,8 +62,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main style={{ background: "#060606", color: "#ffffff" }} className="flex flex-col min-h-screen font-sans">
-      <div className="bg-texture" />
+    <main style={{ background: "#0a0f0a", color: "#ffffff" }} className="flex flex-col min-h-screen font-sans">
+      <div className="bg-texture opacity-60" />
 
       {/* ── NAVBAR ── */}
       <nav
@@ -52,20 +73,28 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Image src="/logo.png" alt="Voltfly" width={120} height={48} className="drop-shadow-[0_0_10px_rgba(0,212,255,0.4)]" priority style={{ objectFit: "contain" }} />
+            <Image
+              src="/logo.png"
+              alt="Voltfly"
+              width={120}
+              height={48}
+              className="drop-shadow-[0_0_10px_rgba(74,222,128,0.35)]"
+              priority
+              style={{ objectFit: "contain" }}
+            />
           </div>
 
           {/* Desktop links in pill */}
           <div
             className="hidden md:flex items-center gap-7 px-7 py-2.5 rounded-full"
-            style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
+            style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
           >
             {["How It Works", "Plans", "Hubs", "Contact"].map((label, i) => (
               <a
                 key={label}
                 href={["#how-it-works", "#plans", "#hubs", "#contact"][i]}
                 className="text-sm font-medium transition-colors"
-                style={{ color: "#C2C2C2" }}
+                style={{ color: "rgba(255,255,255,0.72)" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
                 onMouseLeave={e => (e.currentTarget.style.color = "#C2C2C2")}
               >
@@ -75,7 +104,7 @@ export default function Home() {
           </div>
 
           <a href="#app" className="hidden md:inline-flex btn-primary px-6 py-3 text-sm">
-            Download App
+            Get The App
           </a>
 
           <button className="md:hidden p-2 text-white" onClick={() => setMenuOpen(!menuOpen)}>
@@ -104,7 +133,7 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="relative flex items-center min-h-screen pt-28 pb-20 overflow-hidden">
         {/* Ambient glows */}
-        <div className="glow-cyan" style={{ top: "-15%", left: "-15%" }} />
+        <div className="glow-lime" style={{ top: "-15%", left: "-15%" }} />
         <div className="glow-lime" style={{ bottom: "-10%", right: "-10%" }} />
 
         <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10 w-full">
@@ -115,19 +144,25 @@ export default function Home() {
               {/* Eyebrow pill */}
               <div
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-sm font-medium"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#C2C2C2" }}
+                style={{
+                  background: "rgba(74,222,128,0.12)",
+                  border: "1px solid rgba(74,222,128,0.3)",
+                  color: "#c8ffd9",
+                }}
               >
-                <Zap size={15} style={{ color: "#AADD00" }} />
-                Charge. Ride. Repeat.
+                <Zap size={15} style={{ color: "#4ade80" }} />
+                FOR DELIVERY PARTNERS
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] mb-6 text-white">
-                Electric Vehicle<br />
-                <span className="text-volt">Fleet</span> <span className="text-fly">Operator</span>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-[-0.02em] leading-[1.05] mb-6 text-white">
+                Ditch Petrol.
+                <br />
+                <span style={{ color: "#4ade80" }}>Go Electric.</span>
               </h1>
 
               <p className="text-lg sm:text-xl mb-10 max-w-lg leading-relaxed" style={{ color: "#C2C2C2" }}>
-                Rent an electric scooty. Pay weekly. Ride daily. Join 100+ delivery partners already saving on fuel.
+                Scale your daily earnings with electric scooters built for gig riders. Lower running costs, faster swaps,
+                and predictable weekly pricing.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -135,7 +170,7 @@ export default function Home() {
                   Get Started <ArrowRight size={18} />
                 </a>
                 <a href="#how-it-works" className="btn-outline inline-flex items-center justify-center px-8 py-4 text-base">
-                  Learn More
+                  Explore More
                 </a>
               </div>
 
@@ -149,9 +184,18 @@ export default function Home() {
                 ].map(({ val, label }) => (
                   <div key={label}>
                     <div className="text-3xl font-black text-white mb-1">
-                      {val.endsWith("+") ? <>{val.slice(0, -1)}<span style={{ color: "#00D4FF" }}>+</span></> : val}
+                      {val.endsWith("+") ? (
+                        <>
+                          {val.slice(0, -1)}
+                          <span style={{ color: "#4ade80" }}>+</span>
+                        </>
+                      ) : (
+                        val
+                      )}
                     </div>
-                    <div className="text-sm font-medium" style={{ color: "#C2C2C2" }}>{label}</div>
+                    <div className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.72)" }}>
+                      {label}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -170,23 +214,36 @@ export default function Home() {
                     </div>
                     <div
                       className="w-11 h-11 rounded-full flex items-center justify-center"
-                      style={{ background: "rgba(0,212,255,0.12)", border: "1px solid rgba(0,212,255,0.3)" }}
+                      style={{ background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.3)" }}
                     >
-                      <Zap size={20} style={{ color: "#00D4FF" }} />
+                      <Zap size={20} style={{ color: "#4ade80" }} />
                     </div>
                   </div>
 
                   {/* Vehicle card */}
                   <div className="app-card p-5 relative overflow-hidden">
-                    <div style={{ position: "absolute", top: -30, right: -30, width: 100, height: 100, borderRadius: "50%", background: "rgba(0,212,255,0.15)", filter: "blur(30px)" }} />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: -30,
+                        right: -30,
+                        width: 100,
+                        height: 100,
+                        borderRadius: "50%",
+                        background: "rgba(74,222,128,0.15)",
+                        filter: "blur(30px)",
+                      }}
+                    />
                     <div className="text-xs mb-1.5" style={{ color: "#C2C2C2" }}>Vehicle Status</div>
                     <div className="text-xl font-black text-white mb-4 tracking-widest">DL 3S ER 1234</div>
                     <div
                       className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg"
                       style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
                     >
-                      <BatteryCharging size={16} style={{ color: "#55CC5A" }} />
-                      <span style={{ color: "#55CC5A" }} className="font-semibold">84%</span>
+                      <BatteryCharging size={16} style={{ color: "#4ade80" }} />
+                      <span style={{ color: "#4ade80" }} className="font-semibold">
+                        84%
+                      </span>
                       <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
                       <span style={{ color: "#C2C2C2" }}>52 km</span>
                     </div>
@@ -196,12 +253,18 @@ export default function Home() {
                   <div className="app-card p-4">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium" style={{ color: "#C2C2C2" }}>Next Payment</span>
-                      <span className="font-black text-lg" style={{ color: "#00D4FF" }}>₹1,610</span>
+                      <span className="font-black text-lg" style={{ color: "#4ade80" }}>
+                        ₹1,610
+                      </span>
                     </div>
                     <div className="text-xs mb-3" style={{ color: "#C2C2C2" }}>Due in 3 days (Thursday)</div>
                     <button
                       className="w-full py-2.5 rounded-xl text-sm font-bold transition-colors"
-                      style={{ background: "rgba(0,212,255,0.12)", color: "#00D4FF", border: "1px solid rgba(0,212,255,0.2)" }}
+                      style={{
+                        background: "rgba(74,222,128,0.12)",
+                        color: "#4ade80",
+                        border: "1px solid rgba(74,222,128,0.25)",
+                      }}
                     >
                       Pay via UPI
                     </button>
@@ -215,7 +278,11 @@ export default function Home() {
                         { Icon: MapPin, label: "Swap", active: false },
                         { Icon: ShieldCheck, label: "Support", active: false },
                       ].map(({ Icon, label, active }) => (
-                        <div key={label} className="flex flex-col items-center gap-1" style={{ color: active ? "#00D4FF" : "#C2C2C2" }}>
+                        <div
+                          key={label}
+                          className="flex flex-col items-center gap-1"
+                          style={{ color: active ? "#4ade80" : "#C2C2C2" }}
+                        >
                           <Icon size={20} />
                           <span style={{ fontSize: 10, fontWeight: 600 }}>{label}</span>
                         </div>
@@ -229,43 +296,79 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <WaveDivider />
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" className="py-28 relative section-divider">
+      <section id="how-it-works" className="py-28 relative section-light">
         <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
           <div className="reveal text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 tracking-tight">Start riding in 3 steps</h2>
-            <p className="text-xl max-w-2xl mx-auto" style={{ color: "#C2C2C2" }}>Simple onboarding for delivery partners. Get on the road the same day.</p>
+            <p className="text-sm tracking-[0.12em] font-semibold text-[#34a853] mb-4">HOW IT WORKS</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-[#111111] mb-5 tracking-tight">From sign-up to first ride in 3 steps</h2>
+            <p className="text-xl max-w-2xl mx-auto text-[#555555]">
+              Quick onboarding, clear pricing, and zero confusion for riders who need to start earning fast.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { Icon: Smartphone, n: "01", title: "Download & Sign Up", body: "Create your account and complete KYC verification instantly with Aadhaar, PAN, and a quick selfie.", iconCls: "icon-box-cyan", iconColor: "#00D4FF" },
-              { Icon: ShieldCheck, n: "02", title: "Pay Deposit & Choose Hub", body: "Pay a fully refundable ₹2,000 security deposit and pick up your scooty from the nearest Voltfly hub.", iconCls: "icon-box-cyan", iconColor: "#00D4FF" },
-              { Icon: Zap, n: "03", title: "Ride & Pay Weekly", body: "Start earning immediately. Pay your weekly rent via UPI in the app. Battery swaps are included.", iconCls: "icon-box-cyan", iconColor: "#00D4FF" },
-            ].map(({ Icon, n, title, body, iconCls, iconColor }, i) => (
-              <div key={n} className={`reveal reveal-delay-${i + 1} glass-card rounded-3xl p-10 relative overflow-hidden`}>
+              {
+                Icon: Smartphone,
+                n: "01",
+                title: "Download & Verify",
+                body: "Install the app and complete KYC with Aadhaar, PAN, and a selfie to activate your account.",
+              },
+              {
+                Icon: ShieldCheck,
+                n: "02",
+                title: "Choose Hub & Deposit",
+                body: "Pay a refundable ₹2,000 deposit and collect your EV scooter from your nearest Voltfly hub.",
+              },
+              {
+                Icon: Zap,
+                n: "03",
+                title: "Ride, Earn, Repeat",
+                body: "Hit the road the same day, swap batteries in minutes, and pay rent weekly through UPI.",
+              },
+            ].map(({ Icon, n, title, body }, i) => (
+              <div
+                key={n}
+                className={`reveal reveal-delay-${i + 1} rounded-3xl p-10 relative overflow-hidden transition-all duration-300 hover:-translate-y-1`}
+                style={{
+                  background: "#ffffff",
+                  border: "1px solid rgba(17,17,17,0.08)",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+                }}
+              >
                 {/* Big step number watermark */}
-                <div className="absolute top-6 right-6 text-8xl font-black" style={{ color: "rgba(255,255,255,0.04)", lineHeight: 1 }}>{n}</div>
-                <div className={`icon-box ${iconCls} w-16 h-16 rounded-2xl flex items-center justify-center mb-8`} style={{ color: iconColor }}>
+                <div className="absolute top-6 right-6 text-8xl font-black" style={{ color: "rgba(17,17,17,0.06)", lineHeight: 1 }}>
+                  {n}
+                </div>
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8"
+                  style={{ color: "#22c55e", background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.25)" }}
+                >
                   <Icon size={30} />
                 </div>
-                <h3 className="text-xl font-black text-white mb-4">{title}</h3>
-                <p className="text-base leading-relaxed" style={{ color: "#C2C2C2" }}>{body}</p>
+                <h3 className="text-xl font-black text-[#111111] mb-4">{title}</h3>
+                <p className="text-base leading-relaxed text-[#555555]">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+      <WaveDivider flip />
 
       {/* ── PLANS & PRICING ── */}
       <section id="plans" className="py-28 relative section-divider overflow-hidden">
-        <div className="glow-cyan" style={{ top: "50%", left: "50%", transform: "translate(-50%,-50%)", opacity: 0.5 }} />
+        <div className="glow-lime" style={{ top: "50%", left: "50%", transform: "translate(-50%,-50%)", opacity: 0.5 }} />
 
         <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
           <div className="reveal text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 tracking-tight">Simple, transparent pricing</h2>
-            <p className="text-xl max-w-2xl mx-auto" style={{ color: "#C2C2C2" }}>No hidden fees. Choose a plan that fits your shifts.</p>
+            <p className="text-sm tracking-[0.12em] font-semibold text-[#4ade80] mb-4">PRICING</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 tracking-tight">Simple plans. Predictable costs.</h2>
+            <p className="text-xl max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.72)" }}>
+              No hidden charges. No surprises. Choose the plan that matches your ride volume.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
@@ -276,7 +379,9 @@ export default function Home() {
                 <span className="text-5xl font-black text-white">₹250</span>
                 <span className="font-medium" style={{ color: "#C2C2C2" }}>/day</span>
               </div>
-              <p className="mb-8 text-base" style={{ color: "#C2C2C2" }}>Flexible. Pay per day. Perfect for part-time riders.</p>
+              <p className="mb-8 text-base" style={{ color: "rgba(255,255,255,0.72)" }}>
+                Flexible and commitment-free for part-time or trial riders.
+              </p>
               <ul className="space-y-4 mb-10 flex-1">
                 {["Unlimited battery swaps", "App-based UPI payments"].map(f => (
                   <li key={f} className="flex items-center gap-3">
@@ -291,11 +396,14 @@ export default function Home() {
             </div>
 
             {/* Weekly — featured */}
-            <div className="reveal reveal-delay-2 card-featured rounded-3xl p-10 flex flex-col relative" style={{ transform: "translateY(-16px)" }}>
+            <div
+              className="reveal reveal-delay-2 card-featured rounded-3xl p-10 flex flex-col relative"
+              style={{ transform: "translateY(-16px)" }}
+            >
               {/* Top accent line */}
-              <div className="absolute top-0 inset-x-0 h-[3px] rounded-t-3xl" style={{ background: "linear-gradient(90deg, #4AB4EA, #55CC5A)" }} />
+              <div className="absolute top-0 inset-x-0 h-[3px] rounded-t-3xl" style={{ background: "linear-gradient(90deg, #22c55e, #4ade80)" }} />
               {/* Badge */}
-              <div className="absolute top-3 right-6 badge-cyan text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
+              <div className="absolute top-3 right-6 badge-green text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
                 Most Popular
               </div>
 
@@ -304,8 +412,10 @@ export default function Home() {
                 <span className="text-5xl font-black text-white">₹1,610</span>
                 <span className="font-medium" style={{ color: "#C2C2C2" }}>/week</span>
               </div>
-              <div className="badge-cyan text-sm font-bold px-3 py-1 rounded-lg mb-6 w-fit">Just ₹230/day</div>
-              <p className="mb-8 text-base" style={{ color: "#C2C2C2" }}>The standard choice for full-time delivery partners.</p>
+              <div className="badge-green text-sm font-bold px-3 py-1 rounded-lg mb-6 w-fit">Just ₹230/day</div>
+              <p className="mb-8 text-base" style={{ color: "rgba(255,255,255,0.72)" }}>
+                Best choice for riders doing full-day delivery shifts.
+              </p>
               <ul className="space-y-4 mb-10 flex-1">
                 {["Unlimited battery swaps", "App-based UPI payments", "Priority roadside support"].map(f => (
                   <li key={f} className="flex items-center gap-3">
@@ -326,7 +436,9 @@ export default function Home() {
                 <span className="text-5xl font-black text-white">₹6,900</span>
                 <span className="font-medium" style={{ color: "#C2C2C2" }}>/month</span>
               </div>
-              <p className="mb-8 text-base" style={{ color: "#C2C2C2" }}>Best value for dedicated, long-term riders.</p>
+              <p className="mb-8 text-base" style={{ color: "rgba(255,255,255,0.72)" }}>
+                Strong value for long-term riders with consistent weekly demand.
+              </p>
               <ul className="space-y-4 mb-10 flex-1">
                 {["Unlimited battery swaps", "App-based UPI payments", "Priority roadside support"].map(f => (
                   <li key={f} className="flex items-center gap-3">
@@ -344,7 +456,7 @@ export default function Home() {
           {/* Deposit note */}
           <div className="reveal glass-card rounded-3xl p-8 max-w-3xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-3">
-              <ShieldCheck size={22} style={{ color: "#00D4FF" }} />
+              <ShieldCheck size={22} style={{ color: "#4ade80" }} />
               <span className="text-lg font-bold text-white">Security Deposit</span>
             </div>
             <p className="text-base" style={{ color: "#C2C2C2" }}>
@@ -353,42 +465,79 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <WaveDivider />
 
       {/* ── WHY VOLTFLY ── */}
-      <section className="py-28 relative section-divider">
+      <section className="py-28 relative section-light">
         <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
           <div className="reveal text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 tracking-tight">Why delivery partners choose Voltfly</h2>
-            <p className="text-xl max-w-2xl mx-auto" style={{ color: "#C2C2C2" }}>Built for the demands of Delhi's gig economy.</p>
+            <p className="text-sm tracking-[0.12em] font-semibold text-[#34a853] mb-4">WHY VOLTFLY</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-[#111111] mb-5 tracking-tight">
+              Built for India&apos;s delivery grind
+            </h2>
+            <p className="text-xl max-w-2xl mx-auto text-[#555555]">
+              Every part of the system is designed to keep riders active, earning, and moving.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { Icon: Zap, label: "Zero Fuel Cost", body: "Electric means no petrol bills. Ever. Save ₹300–500 per day vs a petrol bike.", iconCls: "icon-box-lime", color: "#AADD00", delay: 1 },
-              { Icon: BatteryCharging, label: "Battery Swap", body: "Swap your battery in 2 minutes at our network stations. Never run out mid-shift.", iconCls: "icon-box-green", color: "#55CC5A", delay: 2 },
-              { Icon: Smartphone, label: "Everything in App", body: "Pay rent, track your vehicle, raise requests—all seamlessly from your phone.", iconCls: "icon-box-cyan", color: "#00D4FF", delay: 3 },
-              { Icon: ShieldCheck, label: "Refundable Deposit", body: "Your ₹2,000 deposit comes back when you return the scooty in good condition.", iconCls: "icon-box-cyan", color: "#4AB4EA", delay: 4 },
-            ].map(({ Icon, label, body, iconCls, color, delay }) => (
-              <div key={label} className={`reveal reveal-delay-${delay} glass-card rounded-3xl p-8`}>
-                <div className={`icon-box ${iconCls} w-16 h-16 rounded-2xl flex items-center justify-center mb-8`} style={{ color }}>
+              {
+                Icon: Zap,
+                label: "Lower Daily Cost",
+                body: "Cut petrol spend and protect your margins with fixed electric operating costs.",
+                delay: 1,
+              },
+              {
+                Icon: BatteryCharging,
+                label: "Fast Swap Network",
+                body: "Swap batteries in minutes and keep your shift going without long charging waits.",
+                delay: 2,
+              },
+              {
+                Icon: Smartphone,
+                label: "All In One App",
+                body: "Payments, scooter status, support, and service requests in one rider-first experience.",
+                delay: 3,
+              },
+              {
+                Icon: ShieldCheck,
+                label: "Trusted Onboarding",
+                body: "Transparent plans, refundable deposit, and support built for high-intent delivery riders.",
+                delay: 4,
+              },
+            ].map(({ Icon, label, body, delay }) => (
+              <div
+                key={label}
+                className={`reveal reveal-delay-${delay} rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1`}
+                style={{ background: "#ffffff", border: "1px solid rgba(17,17,17,0.08)", boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
+              >
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8"
+                  style={{ color: "#22c55e", background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.25)" }}
+                >
                   <Icon size={30} />
                 </div>
-                <h3 className="text-xl font-black text-white mb-4">{label}</h3>
-                <p className="text-base leading-relaxed" style={{ color: "#C2C2C2" }}>{body}</p>
+                <h3 className="text-xl font-black text-[#111111] mb-4">{label}</h3>
+                <p className="text-base leading-relaxed text-[#555555]">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+      <WaveDivider flip />
 
       {/* ── HUBS ── */}
       <section id="hubs" className="py-28 relative section-divider overflow-hidden">
-        <div className="glow-lime" style={{ top: 0, right: "-15%", opacity: 0.4 }} />
+        <div className="glow-lime" style={{ top: 0, right: "-15%", opacity: 0.5 }} />
 
         <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
           <div className="reveal text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 tracking-tight">Pick up from our Delhi hubs</h2>
-            <p className="text-xl max-w-2xl mx-auto" style={{ color: "#C2C2C2" }}>Two locations covering South and Central Delhi.</p>
+            <p className="text-sm tracking-[0.12em] font-semibold text-[#4ade80] mb-4">DELHI HUBS</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 tracking-tight">Pick up closer. Start faster.</h2>
+            <p className="text-xl max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.72)" }}>
+              Two operational hubs across South and Central Delhi with battery support and on-ground assistance.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -399,8 +548,8 @@ export default function Home() {
               <div key={name} className={`reveal reveal-delay-${delay} glass-card rounded-3xl p-10`}>
                 <div className="flex gap-5">
                   <div
-                    className="icon-box w-14 h-14 rounded-full flex items-center justify-center shrink-0"
-                    style={{ color: "#00D4FF" }}
+                      className="icon-box w-14 h-14 rounded-full flex items-center justify-center shrink-0"
+                      style={{ color: "#4ade80" }}
                   >
                     <MapPin size={26} />
                   </div>
@@ -408,15 +557,15 @@ export default function Home() {
                     <h3 className="text-2xl font-black text-white mb-3">{name}</h3>
                     <p className="text-base mb-5 leading-relaxed whitespace-pre-line" style={{ color: "#C2C2C2" }}>{address}</p>
                     <div className="hub-hours mb-6">
-                      <Clock size={18} style={{ color: "#00D4FF" }} />
+                      <Clock size={18} style={{ color: "#4ade80" }} />
                       Mon–Sat · 9AM–7PM
                     </div>
                     <a
                       href="#"
                       className="inline-flex items-center gap-2 text-base font-bold transition-colors"
-                      style={{ color: "#00D4FF" }}
+                      style={{ color: "#4ade80" }}
                       onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#00D4FF")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "#4ade80")}
                     >
                       Get Directions <ArrowRight size={18} />
                     </a>
@@ -427,21 +576,40 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <WaveDivider />
 
       {/* ── APP DOWNLOAD ── */}
-      <section id="app" className="py-28 relative section-divider overflow-hidden">
-        <div className="glow-cyan" style={{ bottom: "-20%", left: "-15%", opacity: 0.6 }} />
+      <section id="app" className="py-28 relative section-light overflow-hidden">
+        <div className="glow-lime" style={{ bottom: "-20%", left: "-15%", opacity: 0.5 }} />
 
         <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
           {/* Feature container */}
-          <div className="glass-card rounded-[48px] p-10 lg:p-20 relative overflow-hidden" style={{ border: "1px solid rgba(0,212,255,0.15)" }}>
-            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at top right, rgba(0,212,255,0.07) 0%, transparent 60%)", pointerEvents: "none" }} />
+          <div
+            className="rounded-[48px] p-10 lg:p-20 relative overflow-hidden"
+            style={{
+              border: "1px solid rgba(17,17,17,0.08)",
+              background: "#ffffff",
+              boxShadow: "0 16px 40px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "radial-gradient(ellipse at top right, rgba(74,222,128,0.12) 0%, transparent 60%)",
+                pointerEvents: "none",
+              }}
+            />
 
             <div className="grid md:grid-cols-2 gap-16 items-center relative z-10">
               <div className="reveal">
-                <h2 className="text-4xl sm:text-5xl font-black text-white mb-8 tracking-tight">Manage everything from your phone</h2>
-                <p className="text-xl mb-12 leading-relaxed" style={{ color: "#C2C2C2" }}>
-                  The Voltfly Rider app is your key to the fleet. Payments, support, and tracking — all in one place.
+                <p className="text-sm tracking-[0.12em] font-semibold text-[#34a853] mb-4">RIDER APP</p>
+                <h2 className="text-4xl sm:text-5xl font-black text-[#111111] mb-8 tracking-tight">
+                  Manage rides from one screen
+                </h2>
+                <p className="text-xl mb-12 leading-relaxed text-[#555555]">
+                  The Voltfly Rider app helps you handle payments, tracking, support, and service without breaking your
+                  shift flow.
                 </p>
 
                 <ul className="space-y-6 mb-14">
@@ -455,39 +623,44 @@ export default function Home() {
                     <li key={f} className="flex items-center gap-4">
                       <div
                         className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(0,212,255,0.12)", border: "1px solid rgba(0,212,255,0.25)", color: "#00D4FF" }}
+                        style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.25)", color: "#22c55e" }}
                       >
                         <CheckCircle2 size={18} />
                       </div>
-                      <span className="text-white font-medium text-lg">{f}</span>
+                      <span className="text-[#222222] font-medium text-lg">{f}</span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="flex flex-wrap gap-4">
-                  <a href="#"
-                    className="flex items-center gap-4 px-7 py-4 rounded-2xl font-bold text-black bg-white hover:bg-gray-100 transition-colors"
-                    style={{ boxShadow: "0 0 20px rgba(255,255,255,0.15)" }}
+                  <a
+                    href={RIDER_APK_HREF}
+                    download
+                    className="flex items-center gap-4 px-7 py-4 rounded-2xl font-bold text-[#0a0f0a] transition-colors"
+                    style={{ background: "#4ade80", boxShadow: "0 10px 24px rgba(34,197,94,0.3)" }}
                   >
                     <Download size={26} />
                     <div>
-                      <div className="text-[10px] uppercase tracking-widest opacity-70 font-black">Get it on</div>
-                      <div className="text-base">Google Play</div>
+                      <div className="text-[10px] uppercase tracking-widest opacity-70 font-black">Android</div>
+                      <div className="text-base">Download APK</div>
                     </div>
                   </a>
-                  <a href="#"
-                    className="flex items-center gap-4 px-7 py-4 rounded-2xl font-bold text-white transition-colors"
-                    style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.07)")}
+                  <span
+                    className="flex items-center gap-4 px-7 py-4 rounded-2xl font-bold text-[#222222] cursor-not-allowed opacity-60"
+                    style={{ background: "rgba(17,17,17,0.06)", border: "1px solid rgba(17,17,17,0.12)" }}
+                    title="iOS app coming soon"
                   >
                     <Download size={26} />
                     <div>
-                      <div className="text-[10px] uppercase tracking-widest opacity-70 font-black">Download on the</div>
+                      <div className="text-[10px] uppercase tracking-widest opacity-70 font-black">Coming soon</div>
                       <div className="text-base">App Store</div>
                     </div>
-                  </a>
+                  </span>
                 </div>
+                <p className="mt-6 text-sm leading-relaxed max-w-md text-[#666666]">
+                  <strong className="text-[#111111]">Google Play:</strong> listing in progress. Until then, Android users can install
+                  from the APK above (open the file after download; you may need to allow install from your browser in system settings).
+                </p>
               </div>
 
               {/* App mockup 2 */}
@@ -524,7 +697,7 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer id="contact" className="section-divider pt-20 pb-10 relative z-10" style={{ background: "#030303" }}>
+      <footer id="contact" className="section-divider pt-20 pb-10 relative z-10" style={{ background: "#060c06" }}>
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
           <div className="grid md:grid-cols-3 gap-12 mb-14 items-start">
             {/* Left */}
@@ -567,7 +740,7 @@ export default function Home() {
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
                   style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
                 >
-                  <Zap size={15} />
+                  <Zap size={15} style={{ color: "#4ade80" }} />
                 </span>
                 Info@voltflyev.com
               </a>
@@ -580,7 +753,7 @@ export default function Home() {
           >
             <p className="text-sm" style={{ color: "#6b7280" }}>© 2026 Voltfly EV LLP. All rights reserved.</p>
             <p className="text-sm font-black tracking-[0.2em] uppercase" style={{ color: "#6b7280" }}>
-              Charge. Ride. Repeat.
+              Ride Clean. Earn More.
             </p>
           </div>
         </div>

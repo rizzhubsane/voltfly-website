@@ -2,14 +2,14 @@
 
 /* ─── Brand Design Tokens ─── */
 :root {
-  --cyan:       #00D4FF;
-  --blue:       #4AB4EA;
-  --green:      #55CC5A;
-  --lime:       #AADD00;
-  --lime-dark:  #7DC200;
+  --cyan:       #4ADE80;
+  --blue:       #22C55E;
+  --green:      #4ADE80;
+  --lime:       #22C55E;
+  --lime-dark:  #16A34A;
   --gray:       #C2C2C2;
 
-  --bg-page:    #060606;
+  --bg-page:    #0A0F0A;
   --bg-surface: #111111;
   --bg-card:    #171717;
 }
@@ -55,7 +55,7 @@ body {
 
 /* ─── Navbar Glass ─── */
 .glass-nav {
-  background: rgba(6, 6, 6, 0.7);
+  background: rgba(10, 15, 10, 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -132,17 +132,17 @@ body {
 
 /* ─── CTA Button ─── */
 .btn-primary {
-  background: #00D4FF;
-  color: #000000;
+  background: #4ADE80;
+  color: #07110A;
   font-weight: 700;
   border-radius: 9999px;
-  box-shadow: 0 0 24px rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 24px rgba(74, 222, 128, 0.4);
   transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .btn-primary:hover {
-  background: #ffffff;
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px) scale(1.03);
+  background: #34D56B;
+  box-shadow: 0 0 40px rgba(74, 222, 128, 0.45);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .btn-outline {
@@ -265,6 +265,10 @@ body {
 /* ─── Section dividers ─── */
 .section-divider {
   border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.section-light {
+  background: #f8faf8;
 }
 
 /* ─── Hub card ─── */
